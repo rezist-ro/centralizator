@@ -143,6 +143,7 @@ window.oug13 = function() {
                 views[open].open(map, markers[open]);
             } else if(open) {
                 views[open].close(map, markers[open])
+                open = null
             }
         };
         window.addEventListener("popstate", sync)

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f4883f9a354117d447c483ac02377b635bbd70a1a0cf6609d080f9381dc7e0af"
+            "sha256": "121f52dc57c370db766f103a2667a39ac836a015625b5fc53455c96a9510fa53"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -83,7 +83,6 @@
                 "sha256:d34cf15d95ce9a734560f7400a8bd2ac2606f378e2a1d0eadbf1c98707e7c74a",
                 "sha256:5d8534c8e185f2d8a1fda1ef73f2c8f4b23264e8e30063feeb9511d492a413e1"
             ],
-            "markers": "python_version == '2.6' or python_version == '2.7'",
             "version": "==1.0.18"
         },
         "itsdangerous": {
@@ -117,6 +116,13 @@
                 "sha256:891c38b2a02f5bb1be3e4793866c8df49c7d19baabf9c1bad62547e0b4866aca"
             ],
             "version": "==2.6.1"
+        },
+        "python-dotenv": {
+            "hashes": [
+                "sha256:dc7940052cfe170e881aea40feb4ea7776e6a97170ed038fd2ee7e26e47585f2",
+                "sha256:45e927c34204c90f5faa35ea8709b894f6b1a7712d77eb50940601068040993b"
+            ],
+            "version": "==0.7.1"
         },
         "redis": {
             "hashes": [

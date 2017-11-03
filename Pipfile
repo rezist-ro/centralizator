@@ -17,6 +17,7 @@ flask = "*"
 "geoip2" = "*"
 python-dateutil = "*"
 requests = "*"
+python-dotenv = "*"
 
 
 [requires]

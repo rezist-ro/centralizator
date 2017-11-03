@@ -1,10 +1,15 @@
 # coding=utf-8
+import dotenv
 import facebook
 import json
 import os
 import redis
 import requests
 import time
+
+
+dotenv.load_dotenv(dotenv.find_dotenv())
+
 
 GEOCODE_URL = "https://maps.googleapis.com/maps/api/geocode/json"
 FB = facebook.GraphAPI(

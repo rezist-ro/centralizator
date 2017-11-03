@@ -1,5 +1,6 @@
 # coding=utf-8
 import dateutil.parser
+import dotenv
 import flask
 import geoip2.database
 import json
@@ -7,6 +8,9 @@ import os
 import redis
 import time
 import urllib
+
+
+dotenv.load_dotenv(dotenv.find_dotenv())
 
 
 app = flask.Flask(__name__)
