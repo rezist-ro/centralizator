@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>Îndrăznește să crezi!</title>
+        <meta name="description" content="Noi suntem generația care o să vă oprească">
+        <meta name="keywords" content="neamsaturat,rezist,nuscăpați">
+        <link rel="shortcut icon" href="/static/favicon.png" type="image/png">
+        <link rel="icon" href="/favicon.ico" type="image/icon">
+        <style type="text/css">
+#map {
+    height: 100%;
+}
+
+a { color: #365899; text-decoration: none; }
+a:hove { text-decoration: undeline; }  
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.cover {
+    display: block;
+    width: 350px;
+    margin-bottom: 10px;
+    height: 150px;
+    background-position: center;
+    background-size: cover;
+}
+
+h3.date {
+    float: left;
+    font-size: 1.0em;
+    height: 2em;
+    margin: 5px 15px 5px 0;
+}
+.month { color: red; font-weight: bold; text-transform: uppercase; }
+.month, .day { display: block; text-align: center; }
+
+h4.attending, h4.interested {
+    float: right;
+    clear: right;
+    margin: 5px 0 5px 15px;
+    font-size: 0.8em;
+}
+
+h1.title {
+    font-size: 1.2em;
+    margin: 0;
+}
+h2.location { font-size: 1.0em;  }
+p.description { white-space: pre-line; font-size: 0.9em; }
+
+        </style>
+    </head>
+    <body>
+        <div id="map"></div>
+        <script type="text/javascript">
+var events = {{ events|tojson }};
+var address = {{ country|tojson }} +  ", " + {{ region|tojson }}
+
+
+window.oug13 = function() {
+    var map;
+    var coder = new google.maps.Geocoder();
+    coder.geocode( {address: address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            map = new google.maps.Map(document.getElementById("map"), {
+                mapTypeId: "roadmap",
+                center: results[0].geometry.location
+            });
+            map.fitBounds(results[0].geometry.bounds);
+        } else {
+            console.log("Geocode failed: " + status);
+            // romania
+            map = new google.maps.Map(document.getElementById("map"), {
+                mapTypeId: "roadmap",
+                center: {
+                    lat: 45.943161,
+                    lng: 24.96676,
+                }
+            });
+            map.fitBounds(new google.maps.LatLngBounds(
+                new google.maps.LatLng(43.6186193, 20.2617593),
+                new google.maps.LatLng(48.265274, 29.7784)
+            ));
+        }
+
+
+        var views = {}
+        var markers = {}
+        var open = null;
+        events.forEach(function(event) {
+            markers[event.id] = new google.maps.Marker({
+                map: map,
+                position: new google.maps.LatLng(event.lat, event.lng),
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: 'red',
+                    fillOpacity: .2,
+                    scale: 5 + 5 * Math.log10(event.attending_count) +
+                        Math.log10(event.interested_count),
+                    strokeColor: 'white',
+                    strokeWeight: .5
+                },
+            });
+            views[event.id] = new google.maps.InfoWindow({
+                content: event.html,
+                maxWidth: 350
+            });
+            markers[event.id].addListener("click", function() {
+                if(open)
+                    views[open].close(map, markers[open]);
+
+                if(open === event.id) {
+                    history.pushState(null, event.name, "#");
+                    open = null;
+                } else {
+                    open = event.id;
+                    views[open].open(map, markers[open]);
+                    history.pushState(null, event.name, "#" + event.id);
+                }
+            });
+            views[event.id].addListener("closeclick", function() {
+                if(open === event.id) {
+                    history.pushState(null, event.name, "#");
+                    open = null;
+                }
+            })
+        });
+
+
+        var sync = function(e) {
+            if(window.location.hash.length > 1) {
+                event = window.location.hash.substring(1)
+                if(open === event) return
+                if(open)
+                    views[open].close(map, markers[open])
+                open = event
+                views[open].open(map, markers[open]);
+            } else if(open) {
+                views[open].close(map, markers[open])
+            }
+        };
+        window.addEventListener("popstate", sync)
+        sync()
+    });
+}
+        </script>
+        <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key={{ maps_key }}&callback=oug13">
+    </script>
+    <!--footer>
+        <a title="This product includes GeoLite data created by MaxMind" href="http://www.maxmind.com">
+            <img alt="" src="/static/maxmind-logo.png">
+        </a>
+    </footer-->
+    </body>
+</html>

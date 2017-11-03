@@ -1,0 +1,18 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"settings":
+	{
+		"default_line_ending": "unix",
+		"detect_indentation": false,
+		"rulers":
+		[
+			80
+		],
+		"translate_tabs_to_spaces": true
+	}
+}

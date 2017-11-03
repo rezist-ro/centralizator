@@ -1,0 +1,5 @@
+.DS_Store
+*.mmdb
+.env
+*.sublime-workspace
+*.pyc
