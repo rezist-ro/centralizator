@@ -14,7 +14,7 @@
 }
 
 a { color: #365899; text-decoration: none; }
-a:hove { text-decoration: undeline; }  
+a:hover { text-decoration: underline; }  
 
 html, body {
     height: 100%;
@@ -22,11 +22,18 @@ html, body {
     padding: 0;
 }
 
+.event {
+    display: block;
+    margin-left: 21px;
+    width: 329px;
+    vertical-align: baseline;
+}
+
 .cover {
     display: block;
-    width: 350px;
+    width: 100%;
     margin-bottom: 10px;
-    height: 150px;
+    height: 140px;
     background-position: center;
     background-size: cover;
 }
@@ -34,25 +41,38 @@ html, body {
 h3.date {
     float: left;
     font-size: 1.0em;
-    height: 2em;
-    margin: 5px 15px 5px 0;
+    line-height: 18.5px;
+    margin: 0 20px 0 0;
+    text-align: center;
 }
 .month { color: red; font-weight: bold; text-transform: uppercase; }
-.month, .day { display: block; text-align: center; }
+.month, .day { text-align: center; }
 
-h4.attending, h4.interested {
+h4.attending {
+    margin: 0;
     float: right;
-    clear: right;
-    margin: 5px 0 5px 15px;
     font-size: 0.8em;
+    line-height: 18.5px;
+    text-align: right;
 }
 
 h1.title {
     font-size: 1.2em;
     margin: 0;
+    line-height: 1.2em;
 }
-h2.location { font-size: 1.0em;  }
+h2.location {
+    clear: both;
+    font-size: 1.0em;
+    color: #666;
+    margin: 0;
+    padding: 15px 0 0 0;
+}
 p.description { white-space: pre-line; font-size: 0.9em; }
+a.more {
+    padding: 10px;
+    font-size: 1.2em;
+}
 
         </style>
     </head>

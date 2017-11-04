@@ -1,37 +1,25 @@
-<a class="cover" href="https://facebook.com/{{ event.id }}" style="background-image:url('{{ event.cover.source }}')">
-</a>
-<h3 class="date">
-    <span class="month">{{ event.start_time|strftime("%b") }}</span>
-    <span class="day">{{ event.start_time|strftime("%e") }}</span>
-</h3>
+<div class="event">
+    <a class="cover" href="https://facebook.com/{{ event.id }}" style="background-image:url('{{ event.cover.source }}')">
+    </a>
+    <h3 class="date">
+        <span class="month">{{ event.start_time|strftime("%b") }}</span><br>
+        <span class="day">{{ event.start_time|strftime("%e") }}</span>
+    </h3>
 
-<h4 class="attending">
-    <span class="value">{{ event.attending_count }}</span>
-    manifestanți
-</h4>
-<h4 class="interested">
-    <span class="value">{{ event.interested_count }}</span>
-    interesați
-</h4>
+    <h4 class="attending">
+        {{ event.attending_count }} manifestanți<br>
+        {{ event.interested_count }} interesați
+    </h4>
 
-<h1 class="title"><a href="https://facebook.com/{{ event.id }}">
-{{ event.name }}</a></h1>
-<h2 class="location">
-    {{ event.place.name }}
-    <time datetime="{{ event.start_time }}">{{ event.start_time|strftime("%I:%M %p") }}</time>
-</h2>
-<p class="description">
-    {{ event.description|truncate(250) }}
+    <h1 class="title"><a href="https://facebook.com/{{ event.id }}">
+        {{ event.name }}
+    </a></h1>
+
+    <h2 class="location">
+        {{ event.place.name }}
+        {#<time datetime="{{ event.start_time }}">{{ event.start_time|strftime("%I:%M %p") }}</time>#}
+    </h2>
+
+    <p class="description">{{ event.description|truncate(250) }}</p>
     <a class="more" href="https://facebook.com/{{ event.id }}">citește mai mult</a>
-</p>
-
-
-
-{#<h5><a href="https://www.facebook.com/sharer/sharer.php?u={{ ("https://facebook.com/" + event.id)|quote_plus }}">
-    <i class="icon share"></i>
-    Distribuie
-</a></h5>
-<h5><a href="https://facebook.com/{{ event.id }}">
-    <i class="icon plus"></i>
-    Participă
-</a></h5>#}
+</div>
