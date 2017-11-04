@@ -38,8 +38,7 @@ def is_fresh(key, ref=None):
     return now - float(mtime) <= STALE_AFTER
 
 
-
-WITH_STATES = set(["US"])
+COUNTRIES_WITH_STATES = set(["US"])
 @app.route("/")
 def home():
     try:
@@ -66,8 +65,12 @@ def home():
                     "html": flask.render_template("event.html", event=data) 
                 })
 
+    region = ""
+    if geo.country.iso_code in COUNTRIES_WITH_STATES:
+        geo.subdivisions.most_specific.name
+
     return flask.render_template("homepage.html",
         events=events,
         country=geo.country.iso_code,
-        region=geo.subdivisions.most_specific.name if geo.country.iso_code in WITH_STATES else "",
+        region=region,
         maps_key=os.environ["MAPS_KEY"])

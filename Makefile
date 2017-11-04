@@ -8,4 +8,5 @@ db:
 production:
 	git fetch
 	git reset --hard origin/master
-	pipenv run supervisorctl reload
+	pipenv run supervisorctl reread
+	pipenv run supervisorctl restart all
