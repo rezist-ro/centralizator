@@ -24,8 +24,8 @@ html, body {
 
 .event {
     display: block;
-    margin-left: 21px;
-    width: 329px;
+    padding-left: 21px;
+    max-width: 329px;
     vertical-align: baseline;
 }
 
@@ -74,7 +74,7 @@ a.more, a.share {
     padding: 10px;
     font-size: 1.2em;
 }
-a.share { float:right; }
+a.share { float: right; }
 
         </style>
     </head>
@@ -82,7 +82,7 @@ a.share { float:right; }
         <div id="map"></div>
         <script type="text/javascript">
 var events = {{ events|tojson }};
-var address = {{ country|tojson }} +  ", " + {{ region|tojson }}
+var address = {{ country|tojson }} +  ", " + {{ region|tojson }};
 
 
 window.oug13 = function() {
@@ -96,13 +96,12 @@ window.oug13 = function() {
             });
             map.fitBounds(results[0].geometry.bounds);
         } else {
-            console.log("Geocode failed: " + status);
             // romania
             map = new google.maps.Map(document.getElementById("map"), {
                 mapTypeId: "roadmap",
                 center: {
                     lat: 45.943161,
-                    lng: 24.96676,
+                    lng: 24.96676
                 }
             });
             map.fitBounds(new google.maps.LatLngBounds(
@@ -111,8 +110,8 @@ window.oug13 = function() {
             ));
         }
 
-        var views = {}
-        var markers = {}
+        var views = {};
+        var markers = {};
         var open = null;
         events.forEach(function(event) {
             markers[event.id] = new google.maps.Marker({
@@ -126,7 +125,7 @@ window.oug13 = function() {
                         Math.log10(event.interested_count),
                     strokeColor: 'white',
                     strokeWeight: .5
-                },
+                }
             });
             views[event.id] = new google.maps.InfoWindow({
                 content: event.html,
@@ -150,24 +149,24 @@ window.oug13 = function() {
                     history.pushState(null, event.name, "#");
                     open = null;
                 }
-            })
+            });
         });
 
         var sync = function(e) {
             if(window.location.hash.length > 1) {
-                event = window.location.hash.substring(1)
-                if(open === event) return
+                event = window.location.hash.substring(1);
+                if(open === event) return;
                 if(open)
                     views[open].close(map, markers[open])
-                open = event
+                open = event;
                 views[open].open(map, markers[open]);
             } else if(open) {
-                views[open].close(map, markers[open])
-                open = null
+                views[open].close(map, markers[open]);
+                open = null;
             }
-        };
-        window.addEventListener("popstate", sync)
-        sync()
+        }
+        window.addEventListener("popstate", sync);
+        sync();
     });
 }
         </script>

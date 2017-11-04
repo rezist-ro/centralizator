@@ -3,8 +3,8 @@ deps:
 	pipenv update
 db:
 	redis-cli < events.redis
-	pipenv run flushall.py
-	pipenv run refresh.py
+	pipenv run python flushall.py
+	pipenv run python refresh.py
 production:
 	git fetch
 	git reset --hard origin/master
