@@ -88,13 +88,20 @@ var address = {{ country|tojson }} +  ", " + {{ region|tojson }};
 window.oug13 = function() {
     var map;
     var coder = new google.maps.Geocoder();
-    coder.geocode( {address: address}, function(results, status) {
+    coder.geocode({address: address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             map = new google.maps.Map(document.getElementById("map"), {
                 mapTypeId: "roadmap",
                 center: results[0].geometry.location
             });
-            map.fitBounds(results[0].geometry.bounds);
+            try {
+                map.fitBounds(results[0].geometry.bounds);
+            } catch(err) {
+                map.fitBounds(new google.maps.LatLngBounds(
+                    new google.maps.LatLng(43.6186193, 20.2617593),
+                    new google.maps.LatLng(48.265274, 29.7784)
+                ));
+            }
         } else {
             // romania
             map = new google.maps.Map(document.getElementById("map"), {
