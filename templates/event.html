@@ -21,5 +21,6 @@
     </h2>
 
     <p class="description">{{ event.description|truncate(250) }}</p>
+    <a class="share" href="https://facebook.com/sharer.php?u={{ ("https://facebook.com/" + event.id)|quote_plus }}">distribuie</a>
     <a class="more" href="https://facebook.com/{{ event.id }}">citește mai mult</a>
 </div>
