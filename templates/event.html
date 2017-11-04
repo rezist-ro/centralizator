@@ -1,26 +1,30 @@
-<div class="event">
-    <a class="cover" href="https://facebook.com/{{ event.id }}" style="background-image:url('{{ event.cover.source }}')">
+<div class="info-box">
+  <a class="info-box__cover" href="https://facebook.com/{{ event.id }}">
+    <img class="info-box__cover-image" src="{{ event.cover.source }}" alt="">
+  </a>
+
+  <div class="info-box__intro">
+    <a class="info-box__title" href="https://facebook.com/{{ event.id }}">
+      {{ event.name }}
     </a>
-    <h3 class="date">
-        <span class="month">{{ event.start_time|strftime("%b") }}</span><br>
-        <span class="day">{{ event.start_time|strftime("%e") }}</span>
-    </h3>
 
-    <h4 class="attending">
-        {{ event.attending_count }} manifestanți<br>
-        {{ event.interested_count }} interesați
-    </h4>
+    <div class="info-box__details">
+      <div class="info-box__date">
+        <div class="info-box__date-month">{{ event.start_time|strftime("%b") }}</div>
+        <div class="info-box__date-day">{{ event.start_time|strftime("%e") }}</div>
+      </div>
 
-    <h1 class="title"><a href="https://facebook.com/{{ event.id }}">
-        {{ event.name }}
-    </a></h1>
-
-    <h2 class="location">
+      <div class="info-box__location">
         {{ event.place.name }}
-        {#<time datetime="{{ event.start_time }}">{{ event.start_time|strftime("%I:%M %p") }}</time>#}
-    </h2>
+        <time class="info-box__time" datetime="{{ event.start_time }}">{{ event.start_time|strftime("%I:%M %p") }}</time>
+      </div>
+    </div>
 
-    <p class="description">{{ event.description|truncate(200) }}</p>
-    <a class="share" href="https://facebook.com/sharer.php?u={{ ("https://facebook.com/" + event.id)|quote_plus }}">distribuie</a>
-    <a class="more" href="https://facebook.com/{{ event.id }}">citește mai mult</a>
+    <div class="info-box__attendants">
+      <span>{{ event.attending_count }} manifestanți | {{ event.interested_count }} interesați</span>
+      <a class="info-box__share" href="https://facebook.com/sharer.php?u={{ ("https://facebook.com/" + event.id)|quote_plus }}">distribuie</a>
+    </div>
+  </div>
+
+  <p class="info-box__description">{{ event.description|truncate(200) }} <a class="more" href="https://facebook.com/{{ event.id }}">citește mai mult</a></p>
 </div>
