@@ -18,6 +18,7 @@ flask = "*"
 python-dateutil = "*"
 requests = "*"
 python-dotenv = "*"
+supervisor = "*"
 
 
 [requires]

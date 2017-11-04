@@ -3,3 +3,5 @@
 .env
 *.sublime-workspace
 *.pyc
+supervisord.log
+supervisord.pid
