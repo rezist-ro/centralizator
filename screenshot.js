@@ -14,7 +14,7 @@ async function main() {
                 await page.goto("http://localhost:5000");
                 await bluebird.delay(DELAY);
                 await page.screenshot({
-                    path: "static/cover.jpeg",
+                    path: "static/share.jpeg",
                     type: "jpeg",
                     quality: 60,
                     clip: {

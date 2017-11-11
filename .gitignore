@@ -6,4 +6,4 @@
 supervisord.log
 supervisord.pid
 node_modules
-static/cover.jpeg
+static/share.jpeg
