@@ -1,6 +1,7 @@
 # coding=utf-8
 import dotenv
 import facebook
+import hashlib
 import json
 import os
 import redis
@@ -28,6 +29,23 @@ def is_stale(key, ref=None):
     return now - float(mtime) > STALE_AFTER
 
 
+def geocode(location):
+    key = hashlib.sha1(location.encode("utf-8")).hexdigest()
+    cached = DB.get("geocache:%s:data" % key)
+    if cached:
+        cached = json.loads(cached)
+    else:
+        print("Looking up %s" % location.encode("utf-8"))
+        response = requests.get(GEOCODE_URL, params={
+            "address": location,
+            "key": os.environ["GEOCODE_KEY"]
+        })
+        geometry = response.json()["results"][0]["geometry"]
+        cached = (geometry["location"]["lat"], geometry["location"]["lng"])
+        DB.set("geocache:%s:data" % key, json.dumps(cached))
+    return cached
+
+
 def update_events():
     now = time.time()
     for event in DB.smembers("events"):
@@ -40,16 +58,11 @@ def update_events():
                         "name" in data["place"] and \
                         "location" not in data["place"]:
                     try:
-                        response = requests.get(GEOCODE_URL, params={
-                            "address": data["place"]["name"],
-                            "key": os.environ["GEOCODE_KEY"]
-                        })
-                        geometry = response.json()["results"][0]["geometry"]
+                        lat, lng = geocode(data["place"]["name"])
                         data["place"]["location"] = {
-                            "latitude": geometry["location"]["lat"],
-                            "longitude": geometry["location"]["lng"]
+                            "latitude": lat,
+                            "longitude": lng
                         }
-                        print("Location patched")
                     except Exception as e:
                         print("Geocode failed")
                 DB.set("events:%s:data" % event, json.dumps(data))

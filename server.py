@@ -55,7 +55,10 @@ def home():
     for event in DB.smembers("events"):
         if is_fresh("events:%s" % event, ref=now):
             data = json.loads(DB.get("events:%s:data" % event))
-            if "place" in data and "location" in data["place"]:
+            if \
+                    "place" in data and \
+                    "location" in data["place"] and \
+                    "cover" in data:
                 events.append({
                     "id": data["id"],
                     "lat": data["place"]["location"]["latitude"],
