@@ -1,6 +1,6 @@
 deps:
-	brew install pipenv
 	pipenv update
+	npm install
 db:
 	redis-cli < events.redis
 	pipenv run python flushall.py
@@ -8,5 +8,6 @@ db:
 production:
 	git fetch
 	git reset --hard origin/master
+	make deps
 	pipenv run supervisorctl reread
 	pipenv run supervisorctl restart all
