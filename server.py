@@ -38,6 +38,7 @@ def is_fresh(key, ref=None):
     return now - float(mtime) <= STALE_AFTER
 
 
+LOCAL_IPS = map(str.strip, os.environ.get("LOCAL_IPS", "").split(","))
 COUNTRIES_WITH_STATES = set(["US"])
 @app.route("/")
 def home():
@@ -45,10 +46,17 @@ def home():
         ip = flask.request.headers.getlist("X-Forwarded-For")[0]
     except Exception:
         ip =  flask.request.remote_addr
+
+    country = "RO"
+    region = ""
     try:
-        geo = GEO.city(ip)
+        if ip not in LOCAL_IPS:
+            geo = GEO.city(ip)
+            country = geo.country.iso_code
+            if geo.country.iso_code in COUNTRIES_WITH_STATES:
+                region = geo.subdivisions.most_specific.name
     except Exception:
-        geo = GEO.city("5.2.128.0")
+        print("GeoIP failed for %s" % ip)
 
     now = time.time()
     events = []
@@ -68,12 +76,8 @@ def home():
                     "html": flask.render_template("event.html", event=data) 
                 })
 
-    region = ""
-    if geo.country.iso_code in COUNTRIES_WITH_STATES:
-        geo.subdivisions.most_specific.name
-
     return flask.render_template("homepage.html",
         events=events,
-        country=geo.country.iso_code,
+        country=country,
         region=region,
         maps_key=os.environ["MAPS_KEY"])

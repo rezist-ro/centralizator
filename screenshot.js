@@ -2,6 +2,7 @@ const bluebird = require("bluebird");
 const puppeteer = require("puppeteer");
 const ms = require("ms");
 
+const DELAY = ms("10s");
 const INTERVAL = ms("30m");
 async function main() {
     const browser = await puppeteer.launch();
@@ -11,6 +12,7 @@ async function main() {
             try {
                 page.setViewport({width: 1400, height: 730});
                 await page.goto("http://localhost:5000");
+                await bluebird.delay(DELAY);
                 await page.screenshot({
                     path: "static/cover.jpeg",
                     type: "jpeg",
