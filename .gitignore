@@ -5,3 +5,5 @@
 *.pyc
 supervisord.log
 supervisord.pid
+node_modules
+static/cover.jpeg

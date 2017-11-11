@@ -1,0 +1,24 @@
+{
+  "name": "rezist.ro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "screenshot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rezist-ro/centralizator.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rezist-ro/centralizator/issues"
+  },
+  "homepage": "https://github.com/rezist-ro/centralizator#readme",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "ms": "^2.0.0",
+    "puppeteer": "^0.13.0"
+  }
+}
