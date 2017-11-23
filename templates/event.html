@@ -1,6 +1,7 @@
 <div class="info-box">
-  <a class="info-box__cover" href="https://facebook.com/{{ event.id }}">
-    <img class="info-box__cover-image" src="{{ event.cover.source }}" alt="">
+  <a class="info-box__cover"
+     href="https://facebook.com/{{ event.id }}"
+     style="background-image: url('{{ event.cover.source }}'); background-position: {{ event.cover.offset_x  }}%, {{ event.cover.offset_y  }}%">
   </a>
 
   <div class="info-box__intro">
