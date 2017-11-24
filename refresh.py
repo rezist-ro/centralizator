@@ -53,27 +53,30 @@ def update_events():
             print("Updating %s" % event)
             try:
                 data = FB.get_object(id=event, fields=FIELDS)
-                if \
+                override = DB.get("events:%s:override" % event)
+                if override:
+                    override = override.decode("utf-8")
+                if override or (
                         "place" in data and \
                         "name" in data["place"] and \
-                        "location" not in data["place"]:
+                        "location" not in data["place"]):
                     try:
-                        lat, lng = geocode(data["place"]["name"])
+                        lat, lng = geocode(override or data["place"]["name"])
                         data["place"]["location"] = {
                             "latitude": lat,
                             "longitude": lng
                         }
                     except Exception as e:
-                        print("Geocode failed")
+                        print("Geocode failed", e)
                 DB.set("events:%s:data" % event, json.dumps(data))
                 DB.set("events:%s:updated" % event, now)
                 print("OK")
-                time.sleep(1.0)
             except Exception as e:
                 print("Failed", e)
-                time.sleep(60.0)
+            finally:
+                time.sleep(1.0)
 
 
 while True:
     update_events()
-    time.sleep(10.0)
+    time.sleep(60.0)
