@@ -3,6 +3,7 @@ import dateutil.parser
 import dotenv
 import flask
 import geoip2.database
+import geopy.distance
 import json
 import os
 import redis
@@ -40,6 +41,7 @@ def is_fresh(key, ref=None):
 
 LOCAL_IPS = map(str.strip, os.environ.get("LOCAL_IPS", "").split(","))
 COUNTRIES_WITH_STATES = set(["US"])
+JOIN_THRESHOLD = 3.0  # events closer than 3km are joined
 @app.route("/")
 def home():
     try:
@@ -58,23 +60,38 @@ def home():
     except Exception:
         print("GeoIP failed for %s" % ip)
 
+    lat = lambda x: x["place"]["location"]["latitude"]
+    lng = lambda x: x["place"]["location"]["longitude"]
+
     now = time.time()
     events = []
     for event in DB.smembers("events"):
         if is_fresh("events:%s" % event, ref=now):
-            data = json.loads(DB.get("events:%s:data" % event))
+            curr = json.loads(DB.get("events:%s:data" % event))
             if \
-                    "place" in data and \
-                    "location" in data["place"] and \
-                    "cover" in data:
-                events.append({
-                    "id": data["id"],
-                    "lat": data["place"]["location"]["latitude"],
-                    "lng": data["place"]["location"]["longitude"],
-                    "attending_count": data["attending_count"],
-                    "interested_count": data["interested_count"],
-                    "html": flask.render_template("event.html", event=data) 
-                })
+                    "place" in curr and \
+                    "location" in curr["place"] and \
+                    "cover" in curr:
+                for prev in events:
+                    if geopy.distance.great_circle(
+                        (lat(prev), lng(prev)),
+                        (lat(curr), lng(curr))
+                    ).kilometers < JOIN_THRESHOLD:
+                        prev["attending_count"] += curr["attending_count"]
+                        prev["interested_count"] += curr["interested_count"]
+                        break
+                else:
+                    events.append(curr)
+
+    for i, data in enumerate(events):
+        events[i] = {
+            "id": data["id"],
+            "lat": lat(data),
+            "lng": lng(data),
+            "attending_count": data["attending_count"],
+            "interested_count": data["interested_count"],
+            "html": flask.render_template("event.html", event=data) 
+        }
 
     return flask.render_template("homepage.html",
         events=events,

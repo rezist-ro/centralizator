@@ -13,12 +13,13 @@ name = "pypi"
 
 facebook-sdk = "*"
 redis = "*"
-flask = "*"
+Flask = "*"
 "geoip2" = "*"
 python-dateutil = "*"
 requests = "*"
 python-dotenv = "*"
 supervisor = "*"
+geopy = "*"
 
 
 [requires]
