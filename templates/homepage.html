@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html prefix="og: http://ogp.me/ns#">
     <head>
         <meta charset="utf-8">
         <title>Îndrăznește să crezi!</title>
@@ -18,8 +18,87 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
         <style type="text/css">
+@font-face {
+    font-family: "Bebas Neue";
+    src: url("/static/bebas-neue.otf")
+}
+.nav {
+    height: 50px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav-item {
+    flex-grow: 1;
+    text-align: center;
+
+    font: 32px Bebas Neue;
+    line-height: 50px;
+    background: #181422;
+}
+
+@media all and (min-width: 950px) {
+    .nav-item {
+        flex-basis: 0;
+    }
+}
+
+.nav-item__highlight {
+    color: #fbff32;
+}
+
+.nav-item__link {
+    height: 50px;
+    display: inline-block;
+}
+
+.nav-item__link {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-item__link:hover {
+    text-decoration: underline;
+}
+
+.nav-item__secondary {
+    height: 50px;
+    display: none;
+}
+
+@media all and (min-width: 950px) {
+    .nav-item__secondary {
+       display: inline-block;
+    }
+}
+
+.nav-item__secondary svg {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.desktop-only {
+    display: none;
+}
+
+@media all and (min-width: 950px) {
+    .desktop-only {
+       display: initial;
+    }
+}
+
+
 #map {
-    height: 100%;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 html, body {
@@ -160,7 +239,65 @@ a.info-box__share:hover {
         </style>
     </head>
     <body>
-        <div id="map"></div>
+        <header class="nav">
+            <article class="nav-item">
+                <a class="nav-item__link"
+                   href="https://www.facebook.com/600000pentruRezistenta/"
+                >
+                    <span class="nav-item__highlight">#</span>Rezistența
+                </a>
+                <!--a href="https://www.facebook.com/groups/600000pentruRezistenta/">Rezistența 2</a>
+                <a href="https://www.facebook.com/groups/REZISTAMPANALACAPAT/">Rezistența 3</a-->
+            </article>
+
+            <article class="nav-item">
+                <a class="nav-item__link"
+                   href="https://www.facebook.com/RezistentaLIVE/">
+                    <span class="desktop-only">
+                        <span class="nav-item__highlight">#</span>Rezistența
+                    </span><span class="nav-item__highlight">Live</span>
+                </a>
+            </article>
+
+            <article class="nav-item">
+                <a class="nav-item__link"
+                   href="https://rezistența.tv/">
+                    <span class="desktop-only">
+                        <span class="nav-item__highlight">#</span>Rezistența
+                    </span><span class="nav-item__highlight">360</span>
+                </a>
+                </a>
+                &nbsp;
+                <a class="nav-item__secondary desktop-only"
+                   href="https://www.facebook.com/rezistenta360/"
+                   title="Facebook">
+                    <svg aria-label="Facebook"
+                         role="img"
+                         width="20"
+                         height="20"
+                         viewBox="0 0 512 512"
+                    >
+                        <rect width="512" height="512" fill="#3b5998" rx="15%"/>
+                        <path fill="#fff" d="M287 456V157c0-21 6-35 35-35h38V59c-7-1-29-3-55-3-54 0-91 33-91 94v306m143-254H152v72h196"/>
+                    </svg>
+                </a>
+                &nbsp;
+                <a class="nav-item__secondary desktop-only"
+                   href="https://www.youtube.com/channel/UCEYQM-N9Ma1BFnittzk7HrQ"
+                   title="YouTube">
+                    <svg aria-label="YouTube"
+                         role="img"
+                         width="32"
+                         height="32"
+                         viewBox="0 0 512 512"
+                    >
+                        <path fill="#ed1d24" d="M467 149c-5-19-20-34-39-39-34-9-172-9-172-9s-138 0-172 9c-19 5-34 20-39 39-9 35-9 107-9 107s0 72 9 107c5 19 20 34 39 39 34 9 172 9 172 9s138 0 172-9c19-5 34-20 39-39 9-35 9-107 9-107s0-72-9-107"/>
+                        <path fill="#fff" d="M211 321l115-65-115-65v130"/>
+                    </svg>
+                </a>
+            </article>
+        </header>
+        <main id="map"></main>
         <script type="text/javascript">
 var events = {{ events|tojson }};
 var address = {{ country|tojson }} +  ", " + {{ region|tojson }};
