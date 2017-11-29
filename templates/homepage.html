@@ -22,6 +22,7 @@
     font-family: "Bebas Neue";
     src: url("/static/bebas-neue.otf")
 }
+
 .nav {
     height: 50px;
     overflow: hidden;
@@ -54,6 +55,7 @@
 .nav-item__link {
     height: 50px;
     display: inline-block;
+    margin-right: 8px;
 }
 
 .nav-item__link {
@@ -66,8 +68,10 @@
 }
 
 .nav-item__secondary {
+    text-decoration: none;
     height: 50px;
     display: none;
+    padding: 0 4px;
 }
 
 @media all and (min-width: 950px) {
@@ -265,12 +269,10 @@ a.info-box__share:hover {
                     <span class="desktop-only">
                         <span class="nav-item__highlight">#</span>Rezistența
                     </span><span class="nav-item__highlight">360</span>
-                </a>
-                </a>
-                &nbsp;
-                <a class="nav-item__secondary desktop-only"
+                </a><a class="nav-item__secondary"
                    href="https://www.facebook.com/rezistenta360/"
-                   title="Facebook">
+                >
+                    &nbsp;
                     <svg aria-label="Facebook"
                          role="img"
                          width="20"
@@ -280,11 +282,10 @@ a.info-box__share:hover {
                         <rect width="512" height="512" fill="#3b5998" rx="15%"/>
                         <path fill="#fff" d="M287 456V157c0-21 6-35 35-35h38V59c-7-1-29-3-55-3-54 0-91 33-91 94v306m143-254H152v72h196"/>
                     </svg>
-                </a>
-                &nbsp;
-                <a class="nav-item__secondary desktop-only"
+                    &nbsp;
+                </a><a class="nav-item__secondary"
                    href="https://www.youtube.com/channel/UCEYQM-N9Ma1BFnittzk7HrQ"
-                   title="YouTube">
+                >
                     <svg aria-label="YouTube"
                          role="img"
                          width="32"
