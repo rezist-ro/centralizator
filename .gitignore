@@ -1,9 +1,15 @@
+# junk
 .DS_Store
 *.mmdb
-.env
 *.sublime-workspace
+
+# assets
 *.pyc
-supervisord.log
-supervisord.pid
 node_modules
-static/share.jpeg
+static/share.png
+
+# production
+.env
+logs
+.ssh
+
