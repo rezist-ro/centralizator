@@ -19,6 +19,6 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "ms": "^2.0.0",
-    "puppeteer": "^0.13.0"
+    "puppeteer": "^1.13.0"
   }
 }
